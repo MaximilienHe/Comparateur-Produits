@@ -1,0 +1,243 @@
+import { useEffect, useState } from 'react'
+import Filter from '../components/Filter'
+import ProductItem from '../components/ProductItem'
+import styles from '../styles/Home.module.css'
+import Spinner from '../components/Spinner'
+import FilterTag from '../components/FilterTag'
+
+export default function Home({ specs, devices, query }) {
+  const [filters, setFilters] = useState([])
+  const [productList, setProductList] = useState(devices)
+  const [loadingDevices, setLoadingDevices] = useState(false)
+  const [loadingSpecs, setLoadingSpecs] = useState(false)
+  const [page, setPage] = useState(1)
+  const [filtersValues, setFiltersValues] = useState(query)
+  const [scrollY, setScrollY] = useState(0)
+  const [hasMoreResults, setHasMoreResults] = useState(true)
+  const [loadingMoreDevices, setLoadingMoreDevices] = useState(false)
+  const [showFilters, setShowFilters] = useState(false)
+
+  const handleFilterButtonClick = () => {
+    setShowFilters(!showFilters)
+  }
+
+  const handleFilterChange = (
+    filterName,
+    filterValue,
+    isRemoving,
+    callback,
+  ) => {
+    const searchParams = new URLSearchParams(filtersValues)
+
+    if (filterName === 'Fonctionnalités') {
+      if (isRemoving) {
+        searchParams.delete(filterValue) // ici, on supprime le paramètre en utilisant sa valeur
+      } else {
+        searchParams.set(filterValue, 'Oui') // on ajoute le paramètre avec la valeur "Oui"
+      }
+    } else {
+      if (isRemoving || filterValue !== '') {
+        if (isRemoving) {
+          searchParams.delete(filterName)
+        } else {
+          searchParams.set(filterName, filterValue)
+        }
+      }
+    }
+
+    const newUrl = `${window.location.pathname}?${searchParams.toString()}`
+    window.history.replaceState({}, '', newUrl)
+
+    // Update newFiltersValues with the updated searchParams
+    const newFiltersValues = {}
+    for (const [key, value] of searchParams) {
+      newFiltersValues[key] = value
+    }
+
+    setFiltersValues(newFiltersValues)
+    setPage(1)
+
+    // Start fetchSpecs and fetchDevices here
+    setLoadingSpecs(true)
+    fetchSpecs(newFiltersValues).then((data) => {
+      setFilters(Object.entries(data))
+      setLoadingSpecs(false)
+    })
+
+    setLoadingDevices(true)
+    fetchDevices(newFiltersValues, 1).then((data) => {
+      setProductList(data)
+      setLoadingDevices(false)
+      if (callback) {
+        callback()
+      }
+    })
+  }
+
+  useEffect(() => {
+    if (specs) {
+      setFilters(Object.entries(specs))
+    }
+  }, [specs])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    if (
+      !loadingDevices &&
+      productList.length >= 10 &&
+      scrollY + window.innerHeight >= document.documentElement.scrollHeight &&
+      hasMoreResults
+    ) {
+      setLoadingMoreDevices(true)
+      setLoadingDevices(true)
+      setPage(page + 1)
+    }
+  }, [scrollY])
+
+  useEffect(() => {
+    if (page > 1) {
+      fetchDevices(filtersValues, page).then((data) => {
+        setLoadingDevices(false)
+        setLoadingMoreDevices(false)
+        if (data.length > 0) {
+          const newProducts = data.filter(
+            (product) => !productList.some((p) => p.id === product.id),
+          )
+          setProductList((prevList) => [...prevList, ...newProducts])
+        } else {
+          setHasMoreResults(false)
+        }
+      })
+    }
+  }, [page])
+
+  const determineSelectedValue = (values, filtersValues) => {
+    const searchParams = new URLSearchParams(window.location.search)
+
+    for (let item of values.values) {
+      if (
+        ['4G', '5G', 'Carte SD'].includes(item.value) &&
+        searchParams.has(item.value)
+      ) {
+        return item.value
+      }
+    }
+    return filtersValues[values.name]
+  }
+
+  return (
+    <div>
+      <div className={styles.header}>
+        <h1 styles={styles.Title}>
+          Découvrez le nouveau comparateur de DroidSoft !
+        </h1>
+      </div>
+      <div className={styles.container}>
+        <button
+          onClick={handleFilterButtonClick}
+          className={styles.filterButton}
+        >
+          Afficher les filtres
+        </button>
+        <div className={showFilters ? styles.show : styles.hide}>
+          <div className={styles.left}>
+            <div className={styles.filterContainer}>
+              {loadingSpecs && filters.length === 0 ? (
+                <div className={styles.loadingSpecs}>
+                  <Spinner />
+                </div>
+              ) : (
+                filters.map(([name, values]) => (
+                  <Filter
+                    key={name}
+                    filter={{ name, values }}
+                    onFilterChange={handleFilterChange}
+                    selectedValue={determineSelectedValue(
+                      values,
+                      filtersValues,
+                    )}
+                  />
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+        <div className={styles.right}>
+          <div className={styles.FilterTagContainer}>
+            {Object.entries(filtersValues).map(([name, value]) => (
+              <FilterTag
+                key={name}
+                name={name}
+                value={value}
+                onRemove={() => handleFilterChange(name, '', true)}
+              />
+            ))}
+          </div>
+          {loadingDevices && hasMoreResults && (
+            <div className={styles.spinnerContainer}>
+              <Spinner />
+            </div>
+          )}
+          <div className={styles.productsContainer}>
+            {productList.map((product) => (
+              <ProductItem key={product.id} product={product} />
+            ))}
+            {loadingMoreDevices && <Spinner />}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export async function getServerSideProps({ query }) {
+  const specsRes = await fetch(
+    `${
+      process.env.NEXT_PUBLIC_API_BASE_URL
+    }/api/filters/specs?${new URLSearchParams(query)}`,
+    {
+      headers: {
+        'x-api-key': process.env.API_KEY_SECRET,
+      },
+    },
+  )
+  const specs = await specsRes.json()
+
+  const devicesRes = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/devices?${new URLSearchParams(
+      query,
+    )}`,
+    {
+      headers: {
+        'x-api-key': process.env.API_KEY_SECRET,
+      },
+    },
+  )
+  const devices = await devicesRes.json()
+
+  return { props: { specs, devices, query } }
+}
+
+const fetchDevices = async (filtersValues, newPage) => {
+  const query = new URLSearchParams({ ...filtersValues, page: newPage })
+  
+  const res = await fetch(`/api/middleware/devices?${query.toString()}`)
+  const data = await res.json()
+  return data
+}
+
+const fetchSpecs = async (filtersValues) => {
+  const query = new URLSearchParams(filtersValues)
+  
+  const res = await fetch(`/api/middleware/specs?${query.toString()}`)
+  const data = await res.json()
+  return data
+}

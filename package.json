@@ -1,0 +1,37 @@
+{
+  "name": "comparateur_droidsoft",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --check --ignore-path .gitignore .",
+    "format:fix": "prettier --write --ignore-path .gitignore ."
+  },
+  "engines": {
+    "node": "18.12.1"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.13.1",
+    "dotenv": "^16.0.3",
+    "fs": "^0.0.1-security",
+    "moment": "^2.29.4",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.2.4",
+    "next": "13.3.0",
+    "rc-slider": "^10.1.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-input-slider": "^6.0.1",
+    "react-slider": "^2.0.4"
+  },
+  "devDependencies": {
+    "eslint": "8.37.0",
+    "eslint-config-next": "13.3.0",
+    "prettier": "^2.8.7"
+  }
+}

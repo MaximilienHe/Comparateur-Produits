@@ -1,0 +1,232 @@
+.container {
+  display: flex;
+  gap: 4vw;
+  margin: 0 7vw;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    gap: 1vw;
+    margin: 0 3.5vw;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    margin: 0 3.5vw;
+  }
+}
+
+.left {
+  width: 25%;
+}
+
+@media screen and (max-width: 768px) {
+  .left {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .left {
+    width: 30%;
+  }
+}
+
+.right {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vh;
+}
+
+@media screen and (max-width: 768px) {
+  .right {
+    width: 100%;
+  }
+}
+
+.filterContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+@media screen and (max-width: 768px) {
+  .filterContainer {
+    width: 127.5%;
+    padding: 0 3.5vw;
+  }
+}
+
+.productsContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 5vh;
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .productsContainer {
+    padding: 0 0;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .productsContainer {
+    padding-left: 5vw;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 6vh 4vw;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .productsContainer {
+    padding: 0;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .productsContainer {
+    grid-template-columns: 1fr;
+  }
+}
+
+.load-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.load-more button {
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+@media screen and (max-width: 768px) {
+  .load-more button {
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+}
+
+.buttonLoadMore {
+  background-color: #31ad6e;
+  color: white;
+  border-radius: 30px;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 300;
+  font-family: 'Titillium Web', sans-serif;
+}
+
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.FilterTagContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.Title {
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .Title {
+    font-size: 30px;
+    text-align: center;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/* Ajoutez ce CSS pour le bouton "Filtres" */
+.filterButton {
+  /* Center the button */
+  margin: 0 auto;
+  display: none;
+  width: 92%;
+  padding: 10px;
+  background-color: #31ad6e;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+/* Affichez le bouton "Filtres" uniquement sur mobile */
+@media screen and (max-width: 768px) {
+  .filterButton {
+    display: block;
+  }
+}
+
+/* Cachez les filtres par défaut sur mobile */
+@media screen and (max-width: 768px) {
+  .hide {
+    display: none;
+  }
+}
+
+/* Affichez les filtres lorsque l'état "showFilters" est à "true" */
+.show {
+  display: block;
+}
+
+/* Affichez deux produits par ligne sur mobile */
+@media screen and (max-width: 480px) {
+  .productsContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .productsContainer {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Affichez deux produits par ligne sur mobile */
+@media screen and (max-width: 480px) {
+  .productsContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

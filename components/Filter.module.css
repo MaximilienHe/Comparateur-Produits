@@ -1,0 +1,96 @@
+.filter {
+  inline-size: 15vw;
+  background-color: #fff;
+  border-radius: 4px;
+  margin-bottom: 1px;
+  font-family: 'Titillium Web', sans-serif;
+}
+
+@media screen and (max-width: 768px) {
+  .filter {
+    inline-size: 100%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .filter {
+    inline-size: 300%;
+  }
+}
+
+.filterHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #31ad6e;
+  color: #fff;
+  padding: 14px;
+  cursor: pointer;
+}
+
+.filterName {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.arrowRight {
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+}
+
+.arrowDown {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+.filterOptions {
+  background-color: #8be3ae;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.filterOptions input[type='text'] {
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  background-image: url('../public/search.png');
+  background-repeat: no-repeat;
+  background-position: 95%;
+  background-size: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .filterOptions input[type='text'] {
+    padding: 5px;
+    background-size: 15px;
+  }
+}
+
+.filterOption {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.filterOption input[type='checkbox'] {
+  margin-right: 5px;
+}
+
+.filterOptionName {
+  color: #000;
+  font-weight: bold;
+  flex-grow: 1;
+}
+
+.filterOptionCount {
+  color: #000;
+}
+
+.filterOptionHide {
+  display: none;
+}

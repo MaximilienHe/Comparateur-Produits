@@ -1,0 +1,82 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  margin: 0 10vw;
+  gap: 4vw;
+}
+
+.ArticlesContainer {
+  width: 20%;
+  margin-right: 0;
+}
+
+.techSpecsContainer {
+  width: 80%;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #31ad6e;
+}
+
+.image {
+  width: 200px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.specsSection {
+  margin-bottom: 30px;
+}
+
+.specsTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #31ad6e;
+}
+
+.specsList {
+  list-style: none;
+  padding: 0;
+}
+
+.specsItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.articlesTitle {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #31ad6e;
+}
+
+.articlesList {
+  list-style: none;
+  padding: 0;
+}
+
+.articleItem {
+  margin-bottom: 5px;
+}
+
+.articleItem a {
+  color: #31ad6e;
+  text-decoration: none;
+}
+
+.articleItem a:hover {
+  text-decoration: underline;
+}
