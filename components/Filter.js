@@ -68,6 +68,9 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
       default:
         break
     }
+
+    options = options.filter(option => option.value !== "ND");
+
     return options
   }
 
