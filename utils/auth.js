@@ -2,7 +2,7 @@ import db from './database'
 
 export async function validateApiKeyAndPermissions(apiKey, method) {
   try {
-    const sql = 'SELECT * FROM ApiKeys WHERE apiKey = ?'
+    const sql = 'SELECT * FROM apikeys WHERE apiKey = ?'
     const result = await db.query(sql, apiKey)
 
     if (result.length === 0) {
