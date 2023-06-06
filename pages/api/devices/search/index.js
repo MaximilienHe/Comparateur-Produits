@@ -25,7 +25,7 @@ export default async function handler(req, res) {
   try {
     const devices = await db.query(
       `
-      SELECT devices.id, devices.title, devices.brand_name, devices.img, devices.description, devices.announced_date
+      SELECT devices.id, devices.title, devices.brand_name, devices.img, devices.description, devices.description_french, devices.announced_date
       FROM devices
       WHERE devices.title LIKE '${searchTerm}%'
     `,

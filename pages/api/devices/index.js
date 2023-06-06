@@ -32,7 +32,7 @@ export default async function handler(req, res) {
 
 async function getFilteredDevices(filters, offset, limit) {
   let query = `
-    SELECT DISTINCT D.id, D.brand_name, D.title, D.img, D.description, D.announced_date  
+    SELECT DISTINCT D.id, D.brand_name, D.title, D.img, D.description, D.description_french, D.announced_date  
     FROM devices AS D
     INNER JOIN specs ON D.title = specs.device_title
     WHERE 1 = 1
