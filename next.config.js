@@ -3,7 +3,7 @@ require('dotenv').config()
 
 module.exports = {
   images: {
-    domains: ['localhost'],
+    domains: ['comparateur.droidsoft.fr'],
   },
 
   reactStrictMode: true,

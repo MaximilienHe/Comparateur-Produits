@@ -167,12 +167,12 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
     <div className={styles.filter}>
       <div className={styles.filterHeader} onClick={handleOpen}>
         <span className={styles.filterName}>{filterName}</span>
-        <div>
-        {filterLinks[filter.name] && 
-          <a href={filterLinks[filter.name]} target="_blank" rel="noopener noreferrer" className={styles.infoButton}>
-            i
-          </a>
-        }
+        <div className={styles.iconContainer}>
+          {filterLinks[filter.name] && 
+            <a href={filterLinks[filter.name]} target="_blank" rel="noopener noreferrer" className={styles.infoButton}>
+              i
+            </a>
+          }
           <Image
             src="/minimalist_white_arrow.png"
             width={14}

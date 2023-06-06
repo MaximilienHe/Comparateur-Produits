@@ -34,11 +34,13 @@
 }
 
 .arrowRight {
+  margin-left: 10px;
   transform: rotate(0deg);
   transition: transform 0.3s ease;
 }
 
 .arrowDown {
+  margin-left: 10px;
   transform: rotate(180deg);
   transition: transform 0.3s ease;
 }
@@ -108,4 +110,11 @@
   color: #000000;
   text-decoration: none;
   font-size: 14px;
+}
+
+.iconContainer {
+  display: flex;
+  justify-content: flex-end; /* Pousser la flèche vers la droite */
+  align-items: center;
+  flex-grow: 1; /* Prendre toute la place restante */
 }
