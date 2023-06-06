@@ -2,10 +2,12 @@
 require('dotenv').config()
 
 module.exports = {
+  images: {
+    domains: ['localhost'],
+  },
+
   reactStrictMode: true,
   swcMinify: true,
-  basePath: '/comparateur',
-  assetPrefix: '/comparateur/', 
    // Ajouter la configuration du module dotenv ici
   env: {
     DB_HOST: process.env.DB_HOST,

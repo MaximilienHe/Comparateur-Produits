@@ -94,3 +94,18 @@
 .filterOptionHide {
   display: none;
 }
+
+.infoButton {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;  /* Ajout d'une marge à droite */
+  margin-left: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #eeeeee;
+  color: #000000;
+  text-decoration: none;
+  font-size: 14px;
+}

@@ -145,17 +145,42 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
     )
   }
 
+  let filterName = filter.name;
+
+  if (!filterName.startsWith('Nombre de capteurs')) {
+    filterName = filterName.replace(/\(.*?\)\s?/g, '');
+  }
+
+  // Créez un objet avec les correspondances entre les noms de filtres et les URLs
+  const filterLinks = {
+    'SoC': 'https://droidsoft.fr/2023/06/05/comment-comparer-les-performances-de-son-smartphone/#soc-le-coeur-et-lesprit-de-votre-smartphone',
+    'RAM': 'https://droidsoft.fr/2023/06/05/comment-comparer-les-performances-de-son-smartphone/#ram-memoire-vive-fluidite-et-multitache',
+    'Stockage': 'https://droidsoft.fr/2023/06/05/comment-comparer-les-performances-de-son-smartphone/#stockage-un-espace-pour-votre-vie-numerique',
+    'Definition Ecran': 'https://droidsoft.fr/2023/05/24/comment-comparer-lecran-dun-smartphone/#definition-decran-voir-le-monde-en-haute-definition',
+    'Taille Ecran (en pouces)': 'https://droidsoft.fr/2023/05/24/comment-comparer-lecran-dun-smartphone/#taille-decran-plus-grand-estil-toujours-mieux',
+    'Rafraichissement Ecran (en Hz)': 'https://droidsoft.fr/2023/05/24/comment-comparer-lecran-dun-smartphone/#taux-de-rafraichissement-la-fluidite-en-question',
+    'Technologie Ecran': 'https://droidsoft.fr/2023/05/24/comment-comparer-lecran-dun-smartphone/#technologie-decran-oled-amoled-ou-lcd',
+    'Ratio Ecran': 'https://droidsoft.fr/2023/05/24/comment-comparer-lecran-dun-smartphone/#ratio-decran-lequilibre-parfait',
+  }
+
   return (
     <div className={styles.filter}>
       <div className={styles.filterHeader} onClick={handleOpen}>
-        <span className={styles.filterName}>{filter.name}</span>
-        <Image
-          src="/minimalist_white_arrow.png"
-          width={14}
-          height={8}
-          alt="arrow"
-          className={open ? styles.arrowDown : styles.arrowRight}
-        />
+        <span className={styles.filterName}>{filterName}</span>
+        <div>
+        {filterLinks[filter.name] && 
+          <a href={filterLinks[filter.name]} target="_blank" rel="noopener noreferrer" className={styles.infoButton}>
+            i
+          </a>
+        }
+          <Image
+            src="/minimalist_white_arrow.png"
+            width={14}
+            height={8}
+            alt="arrow"
+            className={open ? styles.arrowDown : styles.arrowRight}
+          />
+        </div>
       </div>
       {open && (
         <div className={styles.filterOptions}>
