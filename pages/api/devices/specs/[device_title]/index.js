@@ -49,13 +49,14 @@ function groupByCategory(specs) {
   const groupedSpecs = {}
 
   for (const spec of specs) {
-    const { category_name, name, value } = spec
+    const { category_name, name, value, id } = spec
 
     if (!groupedSpecs[category_name]) {
       groupedSpecs[category_name] = []
     }
 
     groupedSpecs[category_name].push({
+      id,
       name,
       value,
     })
