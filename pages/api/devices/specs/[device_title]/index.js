@@ -38,7 +38,7 @@ async function getDeviceSpecs(deviceName) {
   const sql = `
     SELECT s1.id, s1.category_name, s1.name, s1.value
     FROM specs s1
-    WHERE s1.device_title = ? AND s1.category_name != "AddedData"
+    WHERE s1.device_title = ?
   `
   const results = await db.query(sql, [deviceName])
   return results
@@ -49,7 +49,7 @@ function groupByCategory(specs) {
   const groupedSpecs = {}
 
   for (const spec of specs) {
-    const { id, category_name, name, value, } = spec
+    const { category_name, name, value, id } = spec
 
     if (!groupedSpecs[category_name]) {
       groupedSpecs[category_name] = []
