@@ -36,7 +36,7 @@ export default async function handler(req, res) {
 
 async function getDeviceSpecs(deviceName) {
   const sql = `
-    SELECT s1.category_name, s1.name, s1.value
+    SELECT s1.id, s1.category_name, s1.name, s1.value
     FROM specs s1
     WHERE s1.device_title = ? AND s1.category_name != "AddedData"
   `
@@ -49,7 +49,7 @@ function groupByCategory(specs) {
   const groupedSpecs = {}
 
   for (const spec of specs) {
-    const { category_name, name, value, id } = spec
+    const { id, category_name, name, value, } = spec
 
     if (!groupedSpecs[category_name]) {
       groupedSpecs[category_name] = []
