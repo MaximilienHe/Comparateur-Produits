@@ -12,14 +12,13 @@ const Article = ({ article }) => {
           headers: {
             'x-api-key': process.env.API_KEY_SECRET,
           },
-        }
+        },
       )
       const data = await response.json()
       setPost(data)
     }
     fetchPost()
   }, [article.id])
-  
 
   if (!post) {
     return <div>Chargement de l&apos;article ...</div>

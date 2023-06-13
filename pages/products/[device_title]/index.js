@@ -13,19 +13,25 @@ const ProductPage = () => {
 
   useEffect(() => {
     if (device_title) {
-      fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/devices/details/${device_title}`, {
-        headers: {
-          'x-api-key': process.env.API_KEY_SECRET,
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/devices/details/${device_title}`,
+        {
+          headers: {
+            'x-api-key': process.env.API_KEY_SECRET,
+          },
         },
-      })
+      )
         .then((response) => response.json())
         .then((data) => setProductData(data[0]))
-  
-      fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/devices/specs/${device_title}`, {
-        headers: {
-          'x-api-key': process.env.API_KEY_SECRET,
+
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/devices/specs/${device_title}`,
+        {
+          headers: {
+            'x-api-key': process.env.API_KEY_SECRET,
+          },
         },
-      })
+      )
         .then((response) => response.json())
         .then((data) => setSpecData(data))
 

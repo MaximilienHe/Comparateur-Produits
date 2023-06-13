@@ -31,6 +31,16 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
     setSearchTerm(event.target.value)
   }
 
+  const getSliderStep = () => {
+    switch (filter.name) {
+      case 'DAS':
+      case 'Taille Ecran (en pouces)':
+        return 0.1
+      default:
+        return 1
+    }
+  }
+
   const sortedOptions = () => {
     let options = [...filter.values]
     switch (filter.name) {
@@ -69,7 +79,7 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
         break
     }
 
-    options = options.filter(option => option.value !== "ND");
+    options = options.filter((option) => option.value !== 'ND')
 
     return options
   }
@@ -112,6 +122,20 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
     })
   }
 
+  const getCheckedFeatures = () => {
+    if (filter.name !== 'Fonctionnalités') {
+      return
+    }
+
+    const urlParams = new URLSearchParams(window.location.search)
+    const features = ['4G', '5G', 'Carte SD']
+
+    return features.reduce((result, feature) => {
+      result[feature] = urlParams.get(feature) === 'Oui'
+      return result
+    }, {})
+  }
+
   const rangeSlider = () => {
     const handleChange = (event, newValue) => {
       setValue(newValue)
@@ -128,6 +152,7 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
         onChangeCommitted={handleChangeCommitted}
         min={minRef.current}
         max={maxRef.current}
+        step={getSliderStep()}
         valueLabelDisplay="on"
         getAriaLabel={() => `${filter.name} range`}
         sx={{
@@ -145,22 +170,28 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
     )
   }
 
-  let filterName = filter.name;
+  let filterName = filter.name
 
   if (!filterName.startsWith('Nombre de capteurs')) {
-    filterName = filterName.replace(/\(.*?\)\s?/g, '');
+    filterName = filterName.replace(/\(.*?\)\s?/g, '')
   }
 
   // Créez un objet avec les correspondances entre les noms de filtres et les URLs
   const filterLinks = {
-    'SoC': 'https://droidsoft.fr/2023/06/05/comment-comparer-les-performances-de-son-smartphone/#soc-le-coeur-et-lesprit-de-votre-smartphone',
-    'RAM': 'https://droidsoft.fr/2023/06/05/comment-comparer-les-performances-de-son-smartphone/#ram-memoire-vive-fluidite-et-multitache',
-    'Stockage': 'https://droidsoft.fr/2023/06/05/comment-comparer-les-performances-de-son-smartphone/#stockage-un-espace-pour-votre-vie-numerique',
-    'Definition Ecran': 'https://droidsoft.fr/2023/05/24/comment-comparer-lecran-dun-smartphone/#definition-decran-voir-le-monde-en-haute-definition',
-    'Taille Ecran (en pouces)': 'https://droidsoft.fr/2023/05/24/comment-comparer-lecran-dun-smartphone/#taille-decran-plus-grand-estil-toujours-mieux',
-    'Rafraichissement Ecran (en Hz)': 'https://droidsoft.fr/2023/05/24/comment-comparer-lecran-dun-smartphone/#taux-de-rafraichissement-la-fluidite-en-question',
-    'Technologie Ecran': 'https://droidsoft.fr/2023/05/24/comment-comparer-lecran-dun-smartphone/#technologie-decran-oled-amoled-ou-lcd',
-    'Ratio Ecran': 'https://droidsoft.fr/2023/05/24/comment-comparer-lecran-dun-smartphone/#ratio-decran-lequilibre-parfait',
+    SoC: 'https://droidsoft.fr/2023/06/05/comment-comparer-les-performances-de-son-smartphone/#soc-le-coeur-et-lesprit-de-votre-smartphone',
+    RAM: 'https://droidsoft.fr/2023/06/05/comment-comparer-les-performances-de-son-smartphone/#ram-memoire-vive-fluidite-et-multitache',
+    Stockage:
+      'https://droidsoft.fr/2023/06/05/comment-comparer-les-performances-de-son-smartphone/#stockage-un-espace-pour-votre-vie-numerique',
+    'Definition Ecran':
+      'https://droidsoft.fr/2023/05/24/comment-comparer-lecran-dun-smartphone/#definition-decran-voir-le-monde-en-haute-definition',
+    'Taille Ecran (en pouces)':
+      'https://droidsoft.fr/2023/05/24/comment-comparer-lecran-dun-smartphone/#taille-decran-plus-grand-estil-toujours-mieux',
+    'Rafraichissement Ecran (en Hz)':
+      'https://droidsoft.fr/2023/05/24/comment-comparer-lecran-dun-smartphone/#taux-de-rafraichissement-la-fluidite-en-question',
+    'Technologie Ecran':
+      'https://droidsoft.fr/2023/05/24/comment-comparer-lecran-dun-smartphone/#technologie-decran-oled-amoled-ou-lcd',
+    'Ratio Ecran':
+      'https://droidsoft.fr/2023/05/24/comment-comparer-lecran-dun-smartphone/#ratio-decran-lequilibre-parfait',
   }
 
   return (
@@ -168,11 +199,16 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
       <div className={styles.filterHeader} onClick={handleOpen}>
         <span className={styles.filterName}>{filterName}</span>
         <div className={styles.iconContainer}>
-          {filterLinks[filter.name] && 
-            <a href={filterLinks[filter.name]} target="_blank" rel="noopener noreferrer" className={styles.infoButton}>
+          {filterLinks[filter.name] && (
+            <a
+              href={filterLinks[filter.name]}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.infoButton}
+            >
               i
             </a>
-          }
+          )}
           <Image
             src="/minimalist_white_arrow.png"
             width={14}
@@ -201,28 +237,37 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
                 value={searchTerm}
                 onChange={handleSearch}
               />
-              {sortedOptions().map((value, index) => (
-                <div
-                  key={index}
-                  className={`${styles.filterOption} ${
-                    value.value.toLowerCase().includes(searchTerm.toLowerCase())
-                      ? ''
-                      : styles.filterOptionHide
-                  }`}
-                >
-                  <input
-                    type="checkbox"
-                    checked={Boolean(
-                      selectedValue && value.value === selectedValue,
-                    )}
-                    onChange={() => handleOptionChange(value.value)}
-                  />
-                  <span className={styles.filterOptionName}>{value.value}</span>
-                  <span className={styles.filterOptionCount}>
-                    {value.count}
-                  </span>
-                </div>
-              ))}
+              {sortedOptions().map((value, index) => {
+                const checkedFeatures = getCheckedFeatures()
+                const shouldCheck =
+                  checkedFeatures && checkedFeatures[value.value] !== undefined
+                    ? checkedFeatures[value.value]
+                    : selectedValue && value.value === selectedValue
+                return (
+                  <div
+                    key={index}
+                    className={`${styles.filterOption} ${
+                      value.value
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase())
+                        ? ''
+                        : styles.filterOptionHide
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={Boolean(shouldCheck)}
+                      onChange={() => handleOptionChange(value.value)}
+                    />
+                    <span className={styles.filterOptionName}>
+                      {value.value}
+                    </span>
+                    <span className={styles.filterOptionCount}>
+                      {value.count}
+                    </span>
+                  </div>
+                )
+              })}
             </>
           )}
         </div>

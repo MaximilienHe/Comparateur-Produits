@@ -228,7 +228,7 @@ export async function getServerSideProps({ query }) {
 
 const fetchDevices = async (filtersValues, newPage) => {
   const query = new URLSearchParams({ ...filtersValues, page: newPage })
-  
+
   const res = await fetch(`/api/middleware/devices?${query.toString()}`)
   const data = await res.json()
   return data
@@ -236,7 +236,7 @@ const fetchDevices = async (filtersValues, newPage) => {
 
 const fetchSpecs = async (filtersValues) => {
   const query = new URLSearchParams(filtersValues)
-  
+
   const res = await fetch(`/api/middleware/specs?${query.toString()}`)
   const data = await res.json()
   return data

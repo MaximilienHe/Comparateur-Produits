@@ -8,7 +8,7 @@ module.exports = {
 
   reactStrictMode: true,
   swcMinify: true,
-   // Ajouter la configuration du module dotenv ici
+  // Ajouter la configuration du module dotenv ici
   env: {
     DB_HOST: process.env.DB_HOST,
     DB_USER: process.env.DB_USER,

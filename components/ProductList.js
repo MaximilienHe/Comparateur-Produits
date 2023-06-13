@@ -24,23 +24,23 @@ const ProductList = ({ products }) => {
 }
 
 export async function getServerSideProps(context) {
-  const filters = context.query;
-  const params = new URLSearchParams(filters).toString();
+  const filters = context.query
+  const params = new URLSearchParams(filters).toString()
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/devices?page=${1}&${params}`,
     {
       headers: {
         'x-api-key': process.env.API_KEY_SECRET,
       },
-    }
-  );
-  const products = await res.json();
-  
+    },
+  )
+  const products = await res.json()
+
   return {
     props: {
       products,
     },
-  };
+  }
 }
 
 export default ProductList

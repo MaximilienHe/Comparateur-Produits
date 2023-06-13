@@ -6,13 +6,13 @@ const Spinner = () => {
   return (
     <div className={styles.spinnerContainer}>
       <div className={styles.spinner}>
-      <Image
-        src="https://comparateur.droidsoft.fr/logoDroidSoft.png"
-        alt="Loading..."
-        width={52}
-        height={35}
-        className={styles.image}
-      />
+        <Image
+          src="https://comparateur.droidsoft.fr/logoDroidSoft.png"
+          alt="Loading..."
+          width={52}
+          height={35}
+          className={styles.image}
+        />
       </div>
     </div>
   )
