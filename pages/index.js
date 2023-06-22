@@ -155,11 +155,11 @@ export default function Home({ specs, devices, query }) {
 
   return (
     <div>
-      <div className={styles.header}>
+      {/* <div className={styles.header}>
         <h1 styles={styles.Title}>
           Découvrez le nouveau comparateur de DroidSoft !
         </h1>
-      </div>
+      </div> */}
       <div className={styles.container}>
         <button
           onClick={handleFilterButtonClick}
