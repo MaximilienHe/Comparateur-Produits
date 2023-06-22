@@ -39,7 +39,6 @@ async function getFilteredDevices(filters, offset, limit) {
   let ramAndStorageFilters = { RAM: [], Stockage: [] }
 
   for (const filter in filters) {
-    console.log('Filtre courant : ', filter)
     let value = filters[filter]
     let range = false
     if (typeof value === 'string') {
@@ -98,11 +97,9 @@ async function getFilteredDevices(filters, offset, limit) {
 
   // Now add the RAM and Stockage filters
   for (const filter in ramAndStorageFilters) {
-    console.log('RAM AND STORAGE FILTERS', ramAndStorageFilters)
     if (ramAndStorageFilters[filter].length > 0) {
-      ramAndStorageFilters[filter].forEach((val) => {
-        query += ` AND EXISTS (SELECT 1 FROM specs AS \`S${filter}\` WHERE \`S${filter}\`.device_title = D.title AND \`S${filter}\`.name = '${filter}' AND \`S${filter}\`.value = '${val}')`
-      })
+      let vals = ramAndStorageFilters[filter].map((v) => `'${v}'`).join(',')
+      query += ` AND EXISTS (SELECT 1 FROM specs AS \`S${filter}\` WHERE \`S${filter}\`.device_title = D.title AND \`S${filter}\`.name = '${filter}' AND \`S${filter}\`.value IN (${vals}))`
     }
   }
 
@@ -111,7 +108,6 @@ async function getFilteredDevices(filters, offset, limit) {
     LIMIT ${limit} OFFSET ${offset};
   `
 
-  console.log('\n\n\nDEVICES', query)
   const devices = await db.query(query)
   return devices
 }
