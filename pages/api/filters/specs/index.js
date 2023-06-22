@@ -42,6 +42,7 @@ async function getFilteredDevices(filters, offset, limit) {
         FROM devices 
         WHERE 1 = 1 
   `
+  let ramAndStorageFilters = { RAM: [], Stockage: [] }
 
   for (const filter in filters) {
     let value = filters[filter]
@@ -50,6 +51,12 @@ async function getFilteredDevices(filters, offset, limit) {
       value = value.split('||')
       range = true
     }
+
+    if (filter === 'RAM' || filter === 'Stockage') {
+      ramAndStorageFilters[filter].push(value)
+      continue // Skip the rest of the loop as we've stored the values for later
+    }
+
     switch (filter) {
       // les autres cas restent inchangés
       case 'DAS':
@@ -84,10 +91,8 @@ async function getFilteredDevices(filters, offset, limit) {
       case 'Matériau Arrière':
       case 'Puissance de charge (en W)':
       case 'Rafraichissement Ecran (en Hz)':
-      case 'RAM':
       case 'Ratio Ecran':
       case 'SoC':
-      case 'Stockage':
       case 'Technologie Ecran':
       case 'Type':
         query += `
@@ -123,6 +128,27 @@ async function getFilteredDevices(filters, offset, limit) {
     }
   }
 
+  for (const filter in ramAndStorageFilters) {
+    if (ramAndStorageFilters[filter].length > 0) {
+      let filterConditions = ramAndStorageFilters[filter]
+        .map((val) =>
+          val.split(',').map(
+            (v) => `
+            AND title IN (
+                SELECT device_title 
+                FROM specs 
+                WHERE name = '${filter}' AND value = '${v.trim()}'
+            )
+        `,
+          ),
+        )
+        .flat()
+        .join(' ')
+
+      query += filterConditions
+    }
+  }
+
   query += `
         ) AS filtered_devices ON specs.device_title = filtered_devices.title
         WHERE specs.name IN (
@@ -130,7 +156,6 @@ async function getFilteredDevices(filters, offset, limit) {
         ) AND specs.category_name = "AddedData"
         GROUP BY specs.category_name, specs.name, specs.value;
     `
-
   const devices = await db.query(query)
 
   const structuredData = [

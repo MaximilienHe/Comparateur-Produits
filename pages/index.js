@@ -27,7 +27,7 @@ export default function Home({ specs, devices, query }) {
     isRemoving,
     callback,
   ) => {
-    const searchParams = new URLSearchParams(filtersValues)
+    let searchParams = new URL(window.location.href).searchParams
 
     if (filterName === 'Fonctionnalités') {
       if (isRemoving) {
@@ -37,10 +37,29 @@ export default function Home({ specs, devices, query }) {
       }
     } else {
       if (isRemoving || filterValue !== '') {
-        if (isRemoving) {
-          searchParams.delete(filterName)
+        if (filterName === 'RAM' || filterName === 'Stockage') {
+          // Pour les filtres RAM et Stockage, nous gérons les options multiples
+          if (isRemoving) {
+            let values = searchParams.getAll(filterName)
+            let index = values.indexOf(filterValue)
+            if (index !== -1) {
+              values.splice(index, 1)
+              searchParams.delete(filterName)
+              values.forEach((v) => searchParams.append(filterName, v))
+            }
+          } else {
+            // Before adding the new value, we check if it's not already in the list
+            let existingValues = searchParams.getAll(filterName)
+            if (!existingValues.includes(filterValue)) {
+              searchParams.append(filterName, filterValue)
+            }
+          }
         } else {
-          searchParams.set(filterName, filterValue)
+          if (isRemoving) {
+            searchParams.delete(filterName)
+          } else {
+            searchParams.set(filterName, filterValue)
+          }
         }
       }
     }
@@ -49,9 +68,10 @@ export default function Home({ specs, devices, query }) {
     window.history.replaceState({}, '', newUrl)
 
     // Update newFiltersValues with the updated searchParams
+    // Update newFiltersValues with the updated searchParams
     const newFiltersValues = {}
-    for (const [key, value] of searchParams) {
-      newFiltersValues[key] = value
+    for (const key of searchParams.keys()) {
+      newFiltersValues[key] = searchParams.getAll(key)
     }
 
     setFiltersValues(newFiltersValues)
@@ -172,15 +192,27 @@ export default function Home({ specs, devices, query }) {
         </div>
         <div className={styles.right}>
           <div className={styles.FilterTagContainer}>
-            {Object.entries(filtersValues).map(([name, value]) => (
-              <FilterTag
-                key={name}
-                name={name}
-                value={value}
-                onRemove={() => handleFilterChange(name, '', true)}
-              />
-            ))}
+            {Object.entries(filtersValues).flatMap(([name, value]) =>
+              Array.isArray(value) ? (
+                value.map((v, index) => (
+                  <FilterTag
+                    key={name + index}
+                    name={name}
+                    value={v}
+                    onRemove={() => handleFilterChange(name, v, true)}
+                  />
+                ))
+              ) : (
+                <FilterTag
+                  key={name}
+                  name={name}
+                  value={value}
+                  onRemove={() => handleFilterChange(name, '', true)}
+                />
+              ),
+            )}
           </div>
+
           {loadingDevices && hasMoreResults && (
             <div className={styles.spinnerContainer}>
               <Spinner />

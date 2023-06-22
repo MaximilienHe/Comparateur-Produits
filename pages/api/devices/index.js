@@ -34,17 +34,30 @@ async function getFilteredDevices(filters, offset, limit) {
   let query = `
     SELECT DISTINCT D.id, D.brand_name, D.title, D.img, D.description, D.description_french, D.announced_date  
     FROM devices AS D
-    INNER JOIN specs ON D.title = specs.device_title
     WHERE 1 = 1
   `
+  let ramAndStorageFilters = { RAM: [], Stockage: [] }
 
   for (const filter in filters) {
+    console.log('Filtre courant : ', filter)
     let value = filters[filter]
     let range = false
-    if (typeof value === 'string' && value.includes('||')) {
-      value = value.split('||')
-      range = true
+    if (typeof value === 'string') {
+      if (value.includes('||')) {
+        value = value.split('||')
+        range = true
+      } else {
+        let valuesArray = value.split(',')
+        if (filter === 'RAM' || filter === 'Stockage') {
+          ramAndStorageFilters[filter].push(...valuesArray)
+        } else {
+          valuesArray.forEach((val) => {
+            query += ` AND EXISTS (SELECT 1 FROM specs AS \`S${filter}\` WHERE \`S${filter}\`.device_title = D.title AND \`S${filter}\`.name = '${filter}' AND \`S${filter}\`.value = '${val}')`
+          })
+        }
+      }
     }
+
     switch (filter) {
       // les autres cas restent inchangés
       case 'DAS':
@@ -68,10 +81,8 @@ async function getFilteredDevices(filters, offset, limit) {
       case 'Matériau Arrière':
       case 'Puissance de charge (en W)':
       case 'Rafraichissement Ecran (en Hz)':
-      case 'RAM':
       case 'Ratio Ecran':
       case 'SoC':
-      case 'Stockage':
       case 'Technologie Ecran':
       case 'Type':
         query += ` AND EXISTS (SELECT 1 FROM specs AS \`S${filter}\` WHERE \`S${filter}\`.device_title = D.title AND \`S${filter}\`.name = '${filter}' AND \`S${filter}\`.value = '${value}')`
@@ -85,10 +96,22 @@ async function getFilteredDevices(filters, offset, limit) {
     }
   }
 
+  // Now add the RAM and Stockage filters
+  for (const filter in ramAndStorageFilters) {
+    console.log('RAM AND STORAGE FILTERS', ramAndStorageFilters)
+    if (ramAndStorageFilters[filter].length > 0) {
+      ramAndStorageFilters[filter].forEach((val) => {
+        query += ` AND EXISTS (SELECT 1 FROM specs AS \`S${filter}\` WHERE \`S${filter}\`.device_title = D.title AND \`S${filter}\`.name = '${filter}' AND \`S${filter}\`.value = '${val}')`
+      })
+    }
+  }
+
   query += `
     ORDER BY D.announced_date DESC, D.id DESC
     LIMIT ${limit} OFFSET ${offset};
   `
+
+  console.log('\n\n\nDEVICES', query)
   const devices = await db.query(query)
   return devices
 }

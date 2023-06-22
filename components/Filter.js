@@ -88,6 +88,7 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
     setLoading(true)
     const urlParams = new URLSearchParams(window.location.search)
     let selectedValueInUrl
+    let selectedValuesInUrl
     let isRemovingFilter
 
     // Ajoutez cette condition
@@ -101,6 +102,20 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
         urlParams.set(optionValue, 'Oui')
       } else {
         urlParams.delete(optionValue)
+      }
+    } else if (filter.name === 'RAM' || filter.name === 'Stockage') {
+      selectedValuesInUrl = urlParams.getAll(filter.name)
+      isRemovingFilter = selectedValuesInUrl.includes(optionValue)
+      if (!isRemovingFilter) {
+        urlParams.append(filter.name, optionValue)
+      } else {
+        selectedValuesInUrl = selectedValuesInUrl.filter(
+          (value) => value !== optionValue,
+        )
+        urlParams.delete(filter.name)
+        selectedValuesInUrl.forEach((value) => {
+          urlParams.append(filter.name, value)
+        })
       }
     } else {
       selectedValueInUrl = urlParams.get(filter.name)
@@ -120,6 +135,16 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
     onFilterChange(filter.name, optionValue, isRemovingFilter, () => {
       setLoading(false)
     })
+  }
+
+  const getCheckedValue = (optionValue) => {
+    if (filter.name !== 'RAM' && filter.name !== 'Stockage') {
+      return selectedValue && optionValue === selectedValue
+    }
+
+    const urlParams = new URLSearchParams(window.location.search)
+    const selectedValuesInUrl = urlParams.getAll(filter.name)
+    return selectedValuesInUrl.includes(optionValue)
   }
 
   const getCheckedFeatures = () => {
@@ -238,11 +263,7 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
                 onChange={handleSearch}
               />
               {sortedOptions().map((value, index) => {
-                const checkedFeatures = getCheckedFeatures()
-                const shouldCheck =
-                  checkedFeatures && checkedFeatures[value.value] !== undefined
-                    ? checkedFeatures[value.value]
-                    : selectedValue && value.value === selectedValue
+                const shouldCheck = getCheckedValue(value.value)
                 return (
                   <div
                     key={index}
