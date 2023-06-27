@@ -150,6 +150,7 @@ export default function Home({ specs, devices, query }) {
         return item.value
       }
     }
+    console.log("Valeur sélectionnée :" + filtersValues[values.name])
     return filtersValues[values.name]
   }
 
