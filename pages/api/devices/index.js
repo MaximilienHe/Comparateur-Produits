@@ -32,7 +32,7 @@ export default async function handler(req, res) {
 
 async function getFilteredDevices(filters, offset, limit) {
   let query = `
-    SELECT DISTINCT D.id, D.brand_name, D.title, D.img, D.description, D.description_french, D.announced_date  
+    SELECT DISTINCT D.id, D.brand_name, D.title, D.img, D.description, D.description_french, D.announced_date, D.technical_sheet_written
     FROM devices AS D
     WHERE 1 = 1
   `

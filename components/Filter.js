@@ -138,7 +138,6 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
   }
 
   const getCheckedValue = (optionValue) => {
-    console.log("Valeur sélectionnée : ", selectedValue, optionValue)
     if (filter.name !== 'RAM' && filter.name !== 'Stockage') {
       return selectedValue && optionValue === selectedValue[0]
     }

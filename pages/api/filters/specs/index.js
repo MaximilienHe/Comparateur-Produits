@@ -133,7 +133,6 @@ async function getFilteredDevices(filters, offset, limit) {
         ) AND specs.category_name = "AddedData"
         GROUP BY specs.category_name, specs.name, specs.value;
     `
-  console.log(query)
   const devices = await db.query(query)
 
   const structuredData = [
