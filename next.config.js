@@ -2,6 +2,8 @@
 require('dotenv').config()
 
 module.exports = {
+  basePath: '/comparateur',
+  assetPrefix: '/comparateur',
   images: {
     domains: ['comparateur.droidsoft.fr'],
   },

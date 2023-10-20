@@ -235,7 +235,7 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
             </a>
           )}
           <Image
-            src="/minimalist_white_arrow.png"
+            src="/comparateur/minimalist_white_arrow.png"
             width={14}
             height={8}
             alt="arrow"
