@@ -113,7 +113,7 @@ async function getFilteredDevices(filters, offset, limit) {
                             AND title IN (
                                 SELECT device_title 
                                 FROM specs 
-                                WHERE name = '${value}' AND category_name = '${filter}'
+                                WHERE name = '${filter}' AND value = '${value}'
                             )
                         `
             break

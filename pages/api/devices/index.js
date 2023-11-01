@@ -88,7 +88,7 @@ async function getFilteredDevices(filters, offset, limit) {
         break
       case 'Nombre de capteurs (camera)':
       case 'Nombre de capteurs (selfie)':
-        query += ` AND EXISTS (SELECT 1 FROM specs AS \`S${filter}\` WHERE \`S${filter}\`.device_title = D.title AND \`S${filter}\`.name = '${value}' AND \`S${filter}\`.category_name = '${filter}')`
+        query += ` AND EXISTS (SELECT 1 FROM specs AS \`S${filter}\` WHERE \`S${filter}\`.device_title = D.title AND \`S${filter}\`.name = '${value}' AND \`S${filter}\`.value = '${filter}')`
         break
       default:
         break
