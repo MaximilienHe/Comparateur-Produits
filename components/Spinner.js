@@ -7,7 +7,7 @@ const Spinner = () => {
     <div className={styles.spinnerContainer}>
       <div className={styles.spinner}>
         <Image
-          src="/logoDroidSoft.png"
+          src="./public/logoDroidSoft.png"
           alt="Loading..."
           width={52}
           height={35}
