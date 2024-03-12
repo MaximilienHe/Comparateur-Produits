@@ -115,7 +115,7 @@ export default function Home({ specs, devices, query }) {
     if (
       !loadingDevices &&
       productList.length >= 10 &&
-      scrollY + window.innerHeight >= document.documentElement.scrollHeight &&
+      scrollY + window.innerHeight >= document.documentElement.scrollHeight - document.documentElement.scrollHeight*0.15 &&
       hasMoreResults
     ) {
       setLoadingMoreDevices(true)

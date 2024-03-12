@@ -193,6 +193,14 @@
 
 /* ========================================= Version Mobile ========================================= */
 
+.headerMobile {
+  display: block;
+  position: relative;
+  padding: 0 15px;
+  height: 100%;
+  width: 100%;
+}
+
 /* Grands écrans */
 @media (min-width: 768px){ 
   .headerMobile{
@@ -203,13 +211,7 @@
   }
 }
 
-.headerMobile {
-  display: block;
-  position: relative;
-  padding: 0 15px;
-  height: 100%;
-  width: 100%;
-}
+
 
 .mobileHeaderContainer {
   display: grid;
