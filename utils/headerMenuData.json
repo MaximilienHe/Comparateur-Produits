@@ -1,0 +1,291 @@
+{
+    "menu": [
+        {
+            "id": 1,
+            "link": "https://droidsoft.fr/category/actu/",
+            "name": "Actualités",
+            "parent": 0,
+            "has_children": true,
+            "children": [
+                {
+                    "id": 33,
+                    "link": "https://droidsoft.fr/category/actu/bons-plans-android/",
+                    "name": "Bons plans",
+                    "parent": 1
+                },
+                {
+                    "id": 407,
+                    "link": "https://droidsoft.fr/category/actu/roms-android/",
+                    "name": "Android et Surcouches",
+                    "parent": 1
+                },
+                {
+                    "id": 27,
+                    "link": "https://droidsoft.fr/category/actu/tutoriels/",
+                    "name": "Tutoriels",
+                    "parent": 1
+                },
+                {
+                    "id": 2654,
+                    "link": "https://droidsoft.fr/category/actu/smartphone/",
+                    "name": "Smartphones",
+                    "parent": 1
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "link": "https://droidsoft.fr/category/tests/",
+            "name": "Tests",
+            "parent": 0,
+            "has_children": true,
+            "children": [
+                {
+                    "id": 115,
+                    "link": "https://droidsoft.fr/category/tests/accessoires-android/",
+                    "name": "Accessoires Android",
+                    "parent": 2
+                },
+                {
+                    "id": 2327,
+                    "link": "https://droidsoft.fr/category/tests/android-tv/",
+                    "name": "Boîtiers Android TV",
+                    "parent": 2
+                },
+                {
+                    "id": 19,
+                    "link": "https://droidsoft.fr/category/tests/appli-android/",
+                    "name": "Applications Android",
+                    "parent": 2
+                },
+                {
+                    "id": 35,
+                    "link": "https://droidsoft.fr/category/tests/jeux-android/",
+                    "name": "Jeux Mobile",
+                    "parent": 2
+                },
+                {
+                    "id": 3928,
+                    "link": "https://droidsoft.fr/category/tests/asus-tests/",
+                    "name": "Asus",
+                    "parent": 2
+                },
+                {
+                    "id": 3945,
+                    "link": "https://droidsoft.fr/category/tests/crosscall/",
+                    "name": "Crosscall",
+                    "parent": 2
+                },
+                {
+                    "id": 3929,
+                    "link": "https://droidsoft.fr/category/tests/google-pixel/",
+                    "name": "Google Pixel",
+                    "parent": 2
+                },
+                {
+                    "id": 3930,
+                    "link": "https://droidsoft.fr/category/tests/honor-tests/",
+                    "name": "Honor",
+                    "parent": 2
+                },
+                {
+                    "id": 3931,
+                    "link": "https://droidsoft.fr/category/tests/huawei-tests/",
+                    "name": "Huawei",
+                    "parent": 2
+                },
+                {
+                    "id": 3944,
+                    "link": "https://droidsoft.fr/category/tests/lenovo/",
+                    "name": "Lenovo",
+                    "parent": 2
+                },
+                {
+                    "id": 3932,
+                    "link": "https://droidsoft.fr/category/tests/motorola-tests/",
+                    "name": "Motorola",
+                    "parent": 2
+                },
+                {
+                    "id": 3933,
+                    "link": "https://droidsoft.fr/category/tests/nokia-tests/",
+                    "name": "Nokia",
+                    "parent": 2
+                },
+                {
+                    "id": 3946,
+                    "link": "https://droidsoft.fr/category/tests/nubia/",
+                    "name": "Nubia",
+                    "parent": 2
+                },
+                {
+                    "id": 3934,
+                    "link": "https://droidsoft.fr/category/tests/oneplus-tests/",
+                    "name": "OnePlus",
+                    "parent": 2
+                },
+                {
+                    "id": 3935,
+                    "link": "https://droidsoft.fr/category/tests/oppo-tests/",
+                    "name": "Oppo",
+                    "parent": 2
+                },
+                {
+                    "id": 3936,
+                    "link": "https://droidsoft.fr/category/tests/realme-tests/",
+                    "name": "Realme",
+                    "parent": 2
+                },
+                {
+                    "id": 3943,
+                    "link": "https://droidsoft.fr/category/tests/samsung-tests/",
+                    "name": "Samsung",
+                    "parent": 2
+                },
+                {
+                    "id": 3937,
+                    "link": "https://droidsoft.fr/category/tests/sony-xperia/",
+                    "name": "Sony Xperia",
+                    "parent": 2
+                },
+                {
+                    "id": 3938,
+                    "link": "https://droidsoft.fr/category/tests/tcl/",
+                    "name": "TCL",
+                    "parent": 2
+                },
+                {
+                    "id": 3939,
+                    "link": "https://droidsoft.fr/category/tests/vivo-tests/",
+                    "name": "Vivo",
+                    "parent": 2
+                },
+                {
+                    "id": 3940,
+                    "link": "https://droidsoft.fr/category/tests/wiko-tests/",
+                    "name": "Wiko",
+                    "parent": 2
+                },
+                {
+                    "id": 3941,
+                    "link": "https://droidsoft.fr/category/tests/xiaomi-tests/",
+                    "name": "Xiaomi",
+                    "parent": 2
+                },
+                {
+                    "id": 3942,
+                    "link": "https://droidsoft.fr/category/tests/zte/",
+                    "name": "ZTE",
+                    "parent": 2
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "link": "https://droidsoft.fr/category/comparatif/",
+            "name": "Comparatifs",
+            "parent": 0,
+            "has_children": false
+        },
+        {
+            "id": 4,
+            "link": "https://droidsoft.fr/category/dossier/",
+            "name": "Dossiers",
+            "parent": 0,
+            "has_children": false
+        },
+        {
+            "id": 5,
+            "link": "https://droidsoft.fr/category/fiches-techniques/",
+            "name": "Fiches Techniques",
+            "parent": 0,
+            "has_children": true,
+            "children": [
+                {
+                    "id": 2751,
+                    "link": "https://droidsoft.fr/category/fiches-techniques/asus/",
+                    "name": "Asus",
+                    "parent": 5
+                },
+                {
+                    "id": 2667,
+                    "link": "https://droidsoft.fr/category/fiches-techniques/google/",
+                    "name": "Google",
+                    "parent": 5
+                },
+                {
+                    "id": 2664,
+                    "link": "https://droidsoft.fr/category/fiches-techniques/honor/",
+                    "name": "Honor",
+                    "parent": 5
+                },
+                {
+                    "id": 2663,
+                    "link": "https://droidsoft.fr/category/fiches-techniques/huawei/",
+                    "name": "Huawei",
+                    "parent": 5
+                },
+                {
+                    "id": 2733,
+                    "link": "https://droidsoft.fr/category/fiches-techniques/motorola/",
+                    "name": "Motorola",
+                    "parent": 5
+                },
+                {
+                    "id": 2666,
+                    "link": "https://droidsoft.fr/category/fiches-techniques/nokia/",
+                    "name": "Nokia",
+                    "parent": 5
+                },
+                {
+                    "id": 3956,
+                    "link": "https://droidsoft.fr/category/fiches-techniques/nothing/",
+                    "name": "Nothing",
+                    "parent": 5
+                },
+                {
+                    "id": 2657,
+                    "link": "https://droidsoft.fr/category/fiches-techniques/oneplus/",
+                    "name": "OnePlus",
+                    "parent": 5
+                },
+                {
+                    "id": 2672,
+                    "link": "https://droidsoft.fr/category/fiches-techniques/oppo/",
+                    "name": "Oppo",
+                    "parent": 5
+                },
+                {
+                    "id": 2658,
+                    "link": "https://droidsoft.fr/category/fiches-techniques/realme/",
+                    "name": "Realme",
+                    "parent": 5
+                },
+                {
+                    "id": 2655,
+                    "link": "https://droidsoft.fr/category/fiches-techniques/samsung/",
+                    "name": "Samsung",
+                    "parent": 5
+                },
+                {
+                    "id": 2705,
+                    "link": "https://droidsoft.fr/category/fiches-techniques/sony/",
+                    "name": "Sony Xperia",
+                    "parent": 5
+                },
+                {
+                    "id": 2665,
+                    "link": "https://droidsoft.fr/category/fiches-techniques/wiko/",
+                    "name": "Wiko",
+                    "parent": 5
+                },
+                {
+                    "id": 2656,
+                    "link": "https://droidsoft.fr/category/fiches-techniques/xiaomi/",
+                    "name": "Xiaomi",
+                    "parent": 5
+                }
+            ]
+        }
+    ]
+}

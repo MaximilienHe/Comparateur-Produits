@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 import Filter from '../components/Filter'
 import ProductItem from '../components/ProductItem'
 import styles from '../styles/Home.module.css'
@@ -155,11 +157,7 @@ export default function Home({ specs, devices, query }) {
 
   return (
     <div>
-      {/* <div className={styles.header}>
-        <h1 styles={styles.Title}>
-          Découvrez le nouveau comparateur de DroidSoft !
-        </h1>
-      </div> */}
+      <Header />
       <div className={styles.container}>
         <button
           onClick={handleFilterButtonClick}
@@ -226,6 +224,7 @@ export default function Home({ specs, devices, query }) {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

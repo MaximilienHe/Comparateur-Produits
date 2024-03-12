@@ -1,0 +1,42 @@
+{
+    "media":[
+        {
+            "id":1,
+            "link":"https://www.facebook.com/DroidSoftfr",
+            "label":"Facebook",
+            "icon":"faFacebookF"
+        },
+        {
+            "id":2,
+            "link":"https://www.twitter.com/DroidSoft_fr",
+            "label":"Twitter",
+            "icon":"faXTwitter"
+        },
+        {
+            "id":3,
+            "link":"https://www.instagram.com/droidsoft_fr/?hl=fr",
+            "label":"Instagram",
+            "icon":"faInstagram"
+        },{
+            "id":4,
+            "link":"https://droidsoft.fr/feed",
+            "label":"RSS",
+            "icon":"faRss"
+        }
+    ],
+    "nav":[
+        {
+            "id":1,
+            "link":"https://droidsoft.fr/a-propos/",
+            "label":"A propos"
+        },{
+            "id":2,
+            "link":"https://droidsoft.fr/contact/",
+            "label":"Nous contacter"
+        },{
+            "id":3,
+            "link":"https://droidsoft.fr/2020/02/09/droidsoft-recrute-de-nouveaux-redacteurs-et-testeurs/",
+            "label":"On recrute"
+        }
+    ]
+}
