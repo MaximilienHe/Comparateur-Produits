@@ -5,7 +5,6 @@
   display: block;
   padding: 0;
   margin-bottom: 20px;
-
   color: #fff;
   top: 0;
   height: 70px;
@@ -322,7 +321,7 @@
   position: relative;
 }
 
-.logo{
+.mobileLogo{
   width: 36px;
   height: 36px;
   display: flex;

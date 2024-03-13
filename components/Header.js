@@ -65,7 +65,7 @@ const Header = ({}) => {
                 <a 
                   key={media.id}
                   href={media.link}
-                  className={`${styles.logo} ${styles[media.label.toLowerCase() + 'Special']}`}
+                  className={`${styles.mobileLogo} ${styles[media.label.toLowerCase() + 'Special']}`}
                   title={media.label}
                 >
                   <FontAwesomeIcon icon={iconMap[media.icon]} size='lg'/>
