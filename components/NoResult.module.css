@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
+.noResult{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+}
+
+.mainContainer{
+    margin: 40px 0;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.messageContainer{
+    text-align: center;
+}
+
+.messageContainer h1{
+    font-family: "Titillium Web";
+}
+
+.messageContainer p{
+    font-family: "Quicksand";
+    font-size: 24px;
+    margin: 60px 0;
+}

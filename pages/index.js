@@ -6,6 +6,7 @@ import ProductItem from '../components/ProductItem'
 import styles from '../styles/Home.module.css'
 import Spinner from '../components/Spinner'
 import FilterTag from '../components/FilterTag'
+import NoResult from '../components/NoResult'
 
 export default function Home({ specs, devices, query }) {
   const [filters, setFilters] = useState([])
@@ -18,6 +19,8 @@ export default function Home({ specs, devices, query }) {
   const [hasMoreResults, setHasMoreResults] = useState(true)
   const [loadingMoreDevices, setLoadingMoreDevices] = useState(false)
   const [showFilters, setShowFilters] = useState(false)
+  const [showNoResult, setShowNoResult] = useState(false);
+
 
   const handleFilterButtonClick = () => {
     setShowFilters(!showFilters)
@@ -69,7 +72,6 @@ export default function Home({ specs, devices, query }) {
     const newUrl = `${window.location.pathname}?${searchParams.toString()}`
     window.history.replaceState({}, '', newUrl)
 
-    // Update newFiltersValues with the updated searchParams
     // Update newFiltersValues with the updated searchParams
     const newFiltersValues = {}
     for (const key of searchParams.keys()) {
@@ -216,12 +218,16 @@ export default function Home({ specs, devices, query }) {
               <Spinner />
             </div>
           )}
-          <div className={styles.productsContainer}>
-            {productList.map((product) => (
-              <ProductItem key={product.id} product={product} />
-            ))}
-            {loadingMoreDevices && <Spinner />}
-          </div>
+          {productList.length > 0 ? (
+            <div className={styles.productsContainer}>
+              {productList.map((product) => (
+                <ProductItem key={product.id} product={product} />
+              ))}
+              {loadingMoreDevices && <Spinner />}
+            </div>
+          ) : !loadingDevices && !loadingMoreDevices ? (
+            <NoResult />
+          ) : null}
         </div>
       </div>
       <Footer />
