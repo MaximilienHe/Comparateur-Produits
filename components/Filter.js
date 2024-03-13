@@ -257,37 +257,37 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
           ) : (
             <>
               <input
-                type="text"
-                placeholder="Rechercher..."
-                value={searchTerm}
-                onChange={handleSearch}
-              />
-              {sortedOptions().map((value, index) => {
-                const shouldCheck = getCheckedValue(value.value)
-                return (
-                  <div
-                    key={index}
-                    className={`${styles.filterOption} ${
-                      value.value
-                        .toLowerCase()
-                        .includes(searchTerm.toLowerCase())
-                        ? ''
-                        : styles.filterOptionHide
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={Boolean(shouldCheck)}
-                      onChange={() => handleOptionChange(value.value)}
-                    />
-                    <span className={styles.filterOptionName}>
-                      {value.value}
-                    </span>
-                    <span className={styles.filterOptionCount}>
-                      {value.count}
-                    </span>
-                  </div>
-                )
+                  type="text"
+                  placeholder="Rechercher..."
+                  value={searchTerm}
+                  onChange={handleSearch}
+                />
+                {sortedOptions().map((value, index) => {
+                  const shouldCheck = getCheckedValue(value.value)
+                  return (
+                    <div
+                      key={index}
+                      className={`${styles.filterOption} ${
+                        value.value
+                          .toLowerCase()
+                          .includes(searchTerm.toLowerCase())
+                          ? ''
+                          : styles.filterOptionHide
+                      }`}
+                      onClick={() => handleOptionChange(value.value)}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={Boolean(shouldCheck)}
+                      />
+                      <span className={styles.filterOptionName}>
+                        {value.value}
+                      </span>
+                      <span className={styles.filterOptionCount}>
+                        {value.count}
+                      </span>
+                    </div>
+                  )
               })}
             </>
           )}
