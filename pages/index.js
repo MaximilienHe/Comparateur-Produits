@@ -19,8 +19,6 @@ export default function Home({ specs, devices, query }) {
   const [hasMoreResults, setHasMoreResults] = useState(true)
   const [loadingMoreDevices, setLoadingMoreDevices] = useState(false)
   const [showFilters, setShowFilters] = useState(false)
-  const [showNoResult, setShowNoResult] = useState(false);
-
 
   const handleFilterButtonClick = () => {
     setShowFilters(!showFilters)
@@ -143,6 +141,12 @@ export default function Home({ specs, devices, query }) {
     }
   }, [page])
 
+  useEffect(() => {
+    if (!loadingDevices && !loadingMoreDevices && productList.length === 0) {
+      handleFilterButtonClick();
+    }
+  }, [productList.length, loadingDevices, loadingMoreDevices]);
+
   const determineSelectedValue = (values, filtersValues) => {
     const searchParams = new URLSearchParams(window.location.search)
 
@@ -218,16 +222,16 @@ export default function Home({ specs, devices, query }) {
               <Spinner />
             </div>
           )}
-          {productList.length > 0 ? (
-            <div className={styles.productsContainer}>
-              {productList.map((product) => (
-                <ProductItem key={product.id} product={product} />
-              ))}
-              {loadingMoreDevices && <Spinner />}
-            </div>
-          ) : !loadingDevices && !loadingMoreDevices ? (
-            <NoResult />
-          ) : null}
+            {productList && productList.length > 0 ? (
+              <div className={styles.productsContainer}>
+                {productList.map((device) => (
+                  <ProductItem key={device.id} product={device} />
+                ))}
+                {loadingMoreDevices && <Spinner />}
+              </div>
+            ) : !loadingDevices && !loadingMoreDevices ? (
+              <NoResult />
+        ) : null}
         </div>
       </div>
       <Footer />
