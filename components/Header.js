@@ -44,69 +44,69 @@ const Header = ({}) => {
             <div className={`${styles.bottom} ${styles.bar}`}></div>
           </div>
           <div className={styles.logoCenter}>
-          <img src="https://droidsoft.fr/wp-content/uploads/2022/05/Droidsoft-logo-mobile.png" alt="Logo DroidSoft"/>
+            <img src="https://droidsoft.fr/wp-content/uploads/2022/05/Droidsoft-logo-mobile.png" alt="Logo DroidSoft"/>
           </div>
         </div>
       </div>
       <div className={`${styles.whiteBack} ${isMobileMenuOpen ? styles.whiteBackActive : ''}`} onClick={toggleMobileMenu}>
-      <div className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles["active"] : ''}`} onClick={(event) => event.stopPropagation()}>
-        <div className={styles.logoSection}>
-        <div className={styles.closeButton} onClick={toggleMobileMenu}>
-          <Image
-            src="/xmark.png"
-            alt="Fermer"
-            width={20}
-            height={20}
-            className={styles.image}
-          />
-        </div>
-          <div className={styles.socialIcons}>
-            {socialData.media.map((media) => (
-                <a 
-                  key={media.id}
-                  href={media.link}
-                  className={`${styles.mobileLogo} ${styles[media.label.toLowerCase() + 'Special']}`}
-                  title={media.label}
-                >
-                  <FontAwesomeIcon icon={iconMap[media.icon]} size='lg'/>
-                </a>
-              ))}
+        <div className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles["active"] : ''}`} onClick={(event) => event.stopPropagation()}>
+          <div className={styles.logoSection}>
+          <div className={styles.closeButton} onClick={toggleMobileMenu}>
+            <Image
+              src="/xmark.png"
+              alt="Fermer"
+              width={20}
+              height={20}
+              className={styles.image}
+            />
+          </div>
+            <div className={styles.socialIcons}>
+              {socialData.media.map((media) => (
+                  <a 
+                    key={media.id}
+                    href={media.link}
+                    className={`${styles.mobileLogo} ${styles[media.label.toLowerCase() + 'Special']}`}
+                    title={media.label}
+                  >
+                    <FontAwesomeIcon icon={iconMap[media.icon]} size='lg'/>
+                  </a>
+                ))}
+              </div>
+            </div>
+            <div className={styles.mobileNav}>
+              <nav>
+                <ul className={`${styles.mobileMainMenu} ${styles.mobileUnderlineOnCurrent}`}>
+                  {headerMenuData.menu.map((parent) => (
+                    <li key={parent.id} className={styles.menuItem}>
+                      <div className={styles.mobileLinkWrap}>
+                      <a href={parent.link} className={`${styles.menuLink} ${openSubMenuId === parent.id ? styles.menuLinkActive : ''}`}>
+                    <span>{parent.name}</span>
+                  </a>
+                          {parent.has_children && (
+                            <div onClick={(event) => {event.stopPropagation(); toggleMobileSubMenu(parent.id);}} className={styles.subMenuToggle}>
+                              <div className={styles.mobileSmallArrow}>
+
+                              </div>
+                            </div>
+                          )}
+                      </div>
+                      {parent.has_children && (
+                        <ul className={`${styles.mobileSubMenu} ${openSubMenuId === parent.id ? styles.subMenuOpen : ''}`}>
+                          {parent.children.map((child) => (
+                            <li key={child.id}>
+                              <a href={child.link} className={styles.mobileAnimationSubMenu}>
+                                <span>{child.name}</span>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                  </li>
+                  ))}
+                </ul>
+              </nav>
             </div>
           </div>
-          <div className={styles.mobileNav}>
-            <nav>
-              <ul className={`${styles.mobileMainMenu} ${styles.mobileUnderlineOnCurrent}`}>
-                {headerMenuData.menu.map((parent) => (
-                  <li key={parent.id} className={styles.menuItem}>
-                    <div className={styles.mobileLinkWrap}>
-                    <a href={parent.link} className={`${styles.menuLink} ${openSubMenuId === parent.id ? styles.menuLinkActive : ''}`}>
-                  <span>{parent.name}</span>
-                </a>
-                        {parent.has_children && (
-                          <div onClick={(event) => {event.stopPropagation(); toggleMobileSubMenu(parent.id);}} className={styles.subMenuToggle}>
-                            <div className={styles.mobileSmallArrow}>
-
-                            </div>
-                          </div>
-                        )}
-                    </div>
-                    {parent.has_children && (
-                      <ul className={`${styles.mobileSubMenu} ${openSubMenuId === parent.id ? styles.subMenuOpen : ''}`}>
-                        {parent.children.map((child) => (
-                          <li key={child.id}>
-                            <a href={child.link} className={styles.mobileAnimationSubMenu}>
-                              <span>{child.name}</span>
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                </li>
-                ))}
-              </ul>
-            </nav>
-          </div>
-        </div>
       </div>
       {/* End */}
       <div className={styles.containerWeb}>
