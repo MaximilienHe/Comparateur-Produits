@@ -11,6 +11,7 @@ const ProductItem = ({ product }) => {
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/\s+/g, '-')
+    .replace(/\+/g, '-plus')
     .toLowerCase()
 
   return (
