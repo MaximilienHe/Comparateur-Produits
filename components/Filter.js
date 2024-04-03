@@ -222,25 +222,28 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
   return (
     <div className={styles.filter}>
       <div className={styles.filterHeader} onClick={handleOpen}>
-        <span className={styles.filterName}>{filterName}</span>
         <div className={styles.iconContainer}>
-          {filterLinks[filter.name] && (
-            <a
-              href={filterLinks[filter.name]}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.infoButton}
-            >
-              i
-            </a>
-          )}
-          <Image
-            src="/minimalist_white_arrow.png"
-            width={14}
-            height={8}
-            alt="arrow"
-            className={open ? styles.arrowDown : styles.arrowRight}
-          />
+          <span className={styles.filterName}>{filterName}</span>
+          <div className={styles.infoAndArrowContainer}>
+            {' '}
+            {filterLinks[filter.name] && (
+              <a
+                href={filterLinks[filter.name]}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.infoButton}
+              >
+                i
+              </a>
+            )}
+            <Image
+              src="/minimalist_white_arrow.png"
+              width={14}
+              height={8}
+              alt="arrow"
+              className={open ? styles.arrowDown : styles.arrowRight}
+            />
+          </div>
         </div>
       </div>
       {open && (
@@ -257,37 +260,34 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
           ) : (
             <>
               <input
-                  type="text"
-                  placeholder="Rechercher..."
-                  value={searchTerm}
-                  onChange={handleSearch}
-                />
-                {sortedOptions().map((value, index) => {
-                  const shouldCheck = getCheckedValue(value.value)
-                  return (
-                    <div
-                      key={index}
-                      className={`${styles.filterOption} ${
-                        value.value
-                          .toLowerCase()
-                          .includes(searchTerm.toLowerCase())
-                          ? ''
-                          : styles.filterOptionHide
-                      }`}
-                      onClick={() => handleOptionChange(value.value)}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={Boolean(shouldCheck)}
-                      />
-                      <span className={styles.filterOptionName}>
-                        {value.value}
-                      </span>
-                      <span className={styles.filterOptionCount}>
-                        {value.count}
-                      </span>
-                    </div>
-                  )
+                type="text"
+                placeholder="Rechercher..."
+                value={searchTerm}
+                onChange={handleSearch}
+              />
+              {sortedOptions().map((value, index) => {
+                const shouldCheck = getCheckedValue(value.value)
+                return (
+                  <div
+                    key={index}
+                    className={`${styles.filterOption} ${
+                      value.value
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase())
+                        ? ''
+                        : styles.filterOptionHide
+                    }`}
+                    onClick={() => handleOptionChange(value.value)}
+                  >
+                    <input type="checkbox" checked={Boolean(shouldCheck)} />
+                    <span className={styles.filterOptionName}>
+                      {value.value}
+                    </span>
+                    <span className={styles.filterOptionCount}>
+                      {value.count}
+                    </span>
+                  </div>
+                )
               })}
             </>
           )}
