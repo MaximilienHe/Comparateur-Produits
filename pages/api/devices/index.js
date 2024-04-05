@@ -47,6 +47,10 @@ async function getFilteredDevices(filters, offset, limit) {
         range = true
       } else {
         let valuesArray = value.split(',')
+        // if the filter is "Marque"
+        if (filter === 'Marque') {
+          console.log("First brand here");
+          query += ` AND D.brand_name = '${value}'`
         if (filter === 'RAM' || filter === 'Stockage') {
           ramAndStorageFilters[filter].push(...valuesArray)
         } else {
@@ -59,6 +63,7 @@ async function getFilteredDevices(filters, offset, limit) {
 
     switch (filter) {
       case 'Marque':
+        console.log("Switch brand here")
         query += ` AND D.brand_name = '${value}'`
         break
       // les autres cas restent inchangés
