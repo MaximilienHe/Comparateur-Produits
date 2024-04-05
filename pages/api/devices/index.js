@@ -51,6 +51,7 @@ async function getFilteredDevices(filters, offset, limit) {
         if (filter === 'Marque') {
           console.log("First brand here");
           query += ` AND D.brand_name = '${value}'`
+        }
         if (filter === 'RAM' || filter === 'Stockage') {
           ramAndStorageFilters[filter].push(...valuesArray)
         } else {
