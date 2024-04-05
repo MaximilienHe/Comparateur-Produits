@@ -64,8 +64,7 @@ async function getFilteredDevices(filters, offset, limit) {
 
     switch (filter) {
       case 'Marque':
-        console.log("Switch brand here")
-        query += ` AND D.brand_name = '${value}'`
+        // Do nothing
         break
       // les autres cas restent inchangés
       case 'DAS':
@@ -116,6 +115,7 @@ async function getFilteredDevices(filters, offset, limit) {
     LIMIT ${limit} OFFSET ${offset};
   `
 
+  console.log("Query before", query)
   const devices = await db.query(query)
   return devices
 }
