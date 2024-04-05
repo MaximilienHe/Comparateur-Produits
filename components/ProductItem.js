@@ -15,7 +15,7 @@ const ProductItem = ({ product }) => {
   // Supposons que le nom de fichier de l'image est le même que celui utilisé par le script de téléchargement
   // et stocké dans /public/Images.
   // Vous pourriez avoir besoin d'ajuster le chemin ou le nom du fichier selon vos besoins.
-  const localImagePath = `/Images/${encodeURIComponent(product.img.split('/').pop())}`;
+  const localImagePath = `https://droidsoft.fr/images_smartphones/${encodeURIComponent(product.img.split('/').pop())}`;
 
   return (
     <div className={styles.container}>
