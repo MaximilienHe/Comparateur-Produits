@@ -58,6 +58,9 @@ async function getFilteredDevices(filters, offset, limit) {
     }
 
     switch (filter) {
+      case 'Marque':
+        query += ` AND D.brand_name = '${value}'`
+        break
       // les autres cas restent inchangés
       case 'DAS':
       case 'Taille Ecran (en pouces)':
@@ -76,7 +79,6 @@ async function getFilteredDevices(filters, offset, limit) {
       case '5G':
       case 'Carte SD':
       case 'Definition Ecran':
-      case 'Marque':
       case 'Matériau Arrière':
       case 'Puissance de charge (en W)':
       case 'Rafraichissement Ecran (en Hz)':
