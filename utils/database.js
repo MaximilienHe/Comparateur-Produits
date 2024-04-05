@@ -16,6 +16,7 @@ connection.connect((error) => {
 })
 
 function query(sql, args = []) {
+  console.log("FINAL query", sql, args)
   return new Promise((resolve, reject) => {
     connection.query(sql, args, (error, rows) => {
       if (error) {

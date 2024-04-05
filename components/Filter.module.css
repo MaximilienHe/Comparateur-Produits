@@ -1,21 +1,8 @@
 .filter {
-  inline-size: 15vw;
   background-color: #fff;
   border-radius: 4px;
   margin-bottom: 1px;
   font-family: 'Titillium Web', sans-serif;
-}
-
-@media screen and (max-width: 768px) {
-  .filter {
-    inline-size: 100%;
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  .filter {
-    inline-size: 300%;
-  }
 }
 
 .filterHeader {
@@ -24,13 +11,14 @@
   align-items: center;
   background-color: #31ad6e;
   color: #fff;
-  padding: 14px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  
   cursor: pointer;
 }
 
 .filterName {
   font-weight: bold;
-  margin-right: 10px;
 }
 
 .arrowRight {
@@ -101,8 +89,6 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  margin-right: 10px; /* Ajout d'une marge à droite */
-  margin-left: 5px;
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -114,7 +100,19 @@
 
 .iconContainer {
   display: flex;
-  justify-content: flex-end; /* Pousser la flèche vers la droite */
+  justify-content: space-between;
   align-items: center;
-  flex-grow: 1; /* Prendre toute la place restante */
+  flex-grow: 1;
+  margin-left: 10px;
+  margin-right: 10px;
 }
+
+.filterName {
+  flex: 1; /* Le filterName prendra tout l'espace disponible, mais permettra aux autres éléments de garder leur espace */
+}
+
+/* Ajoutez une classe pour le conteneur de l'infobulle et de la flèche si nécessaire */
+.infoAndArrowContainer {
+  flex-shrink: 0; /* Empêche le conteneur de se réduire */
+}
+

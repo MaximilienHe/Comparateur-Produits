@@ -47,7 +47,12 @@ async function getFilteredDevices(filters, offset, limit) {
         range = true
       } else {
         let valuesArray = value.split(',')
-        if (filter === 'RAM' || filter === 'Stockage') {
+        // if the filter is "Marque"
+        if (filter === 'Marque') {
+          console.log("First brand here");
+          query += ` AND D.brand_name = '${value}'`
+        }
+        else if (filter === 'RAM' || filter === 'Stockage') {
           ramAndStorageFilters[filter].push(...valuesArray)
         } else {
           valuesArray.forEach((val) => {
@@ -58,6 +63,9 @@ async function getFilteredDevices(filters, offset, limit) {
     }
 
     switch (filter) {
+      case 'Marque':
+        // Do nothing
+        break
       // les autres cas restent inchangés
       case 'DAS':
       case 'Taille Ecran (en pouces)':
@@ -76,7 +84,6 @@ async function getFilteredDevices(filters, offset, limit) {
       case '5G':
       case 'Carte SD':
       case 'Definition Ecran':
-      case 'Marque':
       case 'Matériau Arrière':
       case 'Puissance de charge (en W)':
       case 'Rafraichissement Ecran (en Hz)':
@@ -108,6 +115,7 @@ async function getFilteredDevices(filters, offset, limit) {
     LIMIT ${limit} OFFSET ${offset};
   `
 
+  console.log("Query before", query)
   const devices = await db.query(query)
   return devices
 }

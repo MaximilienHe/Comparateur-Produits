@@ -115,7 +115,9 @@ export default function Home({ specs, devices, query, sliderFilterExtremes }) {
     if (
       !loadingDevices &&
       productList.length >= 10 &&
-      scrollY + window.innerHeight >= document.documentElement.scrollHeight - document.documentElement.scrollHeight*0.15 &&
+      scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight -
+          document.documentElement.scrollHeight * 0.15 &&
       hasMoreResults
     ) {
       setLoadingMoreDevices(true)
@@ -143,9 +145,9 @@ export default function Home({ specs, devices, query, sliderFilterExtremes }) {
 
   useEffect(() => {
     if (!loadingDevices && !loadingMoreDevices && productList.length === 0) {
-      handleFilterButtonClick();
+      handleFilterButtonClick()
     }
-  }, [productList.length, loadingDevices, loadingMoreDevices]);
+  }, [productList.length, loadingDevices, loadingMoreDevices])
 
   const determineSelectedValue = (values, filtersValues) => {
     const searchParams = new URLSearchParams(window.location.search)
@@ -223,16 +225,16 @@ export default function Home({ specs, devices, query, sliderFilterExtremes }) {
               <Spinner />
             </div>
           )}
-            {productList && productList.length > 0 ? (
-              <div className={styles.productsContainer}>
-                {productList.map((device) => (
-                  <ProductItem key={device.id} product={device} />
-                ))}
-                {loadingMoreDevices && <Spinner />}
-              </div>
-            ) : !loadingDevices && !loadingMoreDevices ? (
-              <NoResult />
-        ) : null}
+          {productList && productList.length > 0 ? (
+            <div className={styles.productsContainer}>
+              {productList.map((device) => (
+                <ProductItem key={device.id} product={device} />
+              ))}
+              {loadingMoreDevices && <Spinner />}
+            </div>
+          ) : !loadingDevices && !loadingMoreDevices ? (
+            <NoResult />
+          ) : null}
         </div>
       </div>
       <Footer />
@@ -294,7 +296,16 @@ export async function getServerSideProps({ query }) {
 const fetchDevices = async (filtersValues, newPage) => {
   const query = new URLSearchParams({ ...filtersValues, page: newPage })
 
-  const res = await fetch(`/api/middleware/devices?${query.toString()}`)
+  // const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/middleware/devices?${query.toString()}`)
+
+  // Fetch, but with no cors
+  const res = await fetch(
+    `${
+      process.env.NEXT_PUBLIC_API_BASE_URL
+    }/api/middleware/devices?${query.toString()}`,
+    {},
+  )
+
   const data = await res.json()
   return data
 }
@@ -302,7 +313,16 @@ const fetchDevices = async (filtersValues, newPage) => {
 const fetchSpecs = async (filtersValues) => {
   const query = new URLSearchParams(filtersValues)
 
-  const res = await fetch(`/api/middleware/specs?${query.toString()}`)
+  // const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/middleware/specs?${query.toString()}`)
+
+  // Fetch, but with no cors
+  const res = await fetch(
+    `${
+      process.env.NEXT_PUBLIC_API_BASE_URL
+    }/api/middleware/specs?${query.toString()}`,
+    {},
+  )
+
   const data = await res.json()
   return data
 }
