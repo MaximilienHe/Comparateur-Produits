@@ -4,24 +4,25 @@ import styles from './Filter.module.css'
 import Spinner from './Spinner'
 import Slider from '@mui/material/Slider'
 
-export default function Filter({ filter, onFilterChange, selectedValue }) {
+export default function Filter({ filter, onFilterChange, selectedValue, sliderFilterExtremes }) {
+
   const [open, setOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [loading, setLoading] = useState(false)
 
   filter = filter.values
 
-  const minRef = useRef()
-  const maxRef = useRef()
+  const {extremMin, extremMax} = sliderFilterExtremes[filter.name] || { extremMin: 0, extremMax: 100 };
 
-  const [value, setValue] = useState([null, null])
+  const [currentMin, setCurrentMin] = useState(extremMin);
+  const [currentMax, setCurrentMax] = useState(extremMax);
 
   useEffect(() => {
-    minRef.current = Math.min(...filter.values.map((o) => parseFloat(o.value)))
-    maxRef.current = Math.max(...filter.values.map((o) => parseFloat(o.value)))
-
-    setValue([minRef.current, maxRef.current])
-  }, [])
+    if (!selectedValue || selectedValue.length === 0) {
+      setCurrentMin(extremMin);
+      setCurrentMax(extremMax);
+    }
+  }, [selectedValue, extremMin, extremMax]);
 
   const handleOpen = () => {
     setOpen(!open)
@@ -89,7 +90,7 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
     const urlParams = new URLSearchParams(window.location.search)
     let selectedValueInUrl
     let selectedValuesInUrl
-    let isRemovingFilter
+    let isRemovingFilter = false
 
     // Ajoutez cette condition
     if (
@@ -127,14 +128,12 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
       }
     }
 
-    const newUrl = window.location.pathname + '?' + urlParams.toString()
-
     // Réinitialiser searchTerm après la modification de l'URL
     setSearchTerm('')
 
     onFilterChange(filter.name, optionValue, isRemovingFilter, () => {
-      setLoading(false)
-    })
+      setLoading(false);
+    });
   }
 
   const getCheckedValue = (optionValue) => {
@@ -162,26 +161,35 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
   }
 
   const rangeSlider = () => {
+    const { extremMin, extremMax } = sliderFilterExtremes[filter.name] || { extremMin: null, extremMax: null };
+    // const shouldDisplayMessage = ;
+    
     const handleChange = (event, newValue) => {
-      setValue(newValue)
+      setCurrentMin(newValue[0]);
+      setCurrentMax(newValue[1]);
     }
 
     const handleChangeCommitted = (event, newValue) => {
-      handleOptionChange(`${newValue[0]}||${newValue[1]}`)
+      setCurrentMin(newValue[0]);
+      setCurrentMax(newValue[1]);
+      handleOptionChange(`${newValue[0]}||${newValue[1]}`);
     }
+
+  //   if (shouldDisplayMessage) {
+  //     return <div>Aucun résultat pour ce filtre</div>;
+  // }
 
     return (
       <Slider
-        value={value}
+        value={[currentMin, currentMax]}
         onChange={handleChange}
         onChangeCommitted={handleChangeCommitted}
-        min={minRef.current}
-        max={maxRef.current}
+        min={extremMin}
+        max={extremMax}
         step={getSliderStep()}
         valueLabelDisplay="on"
         getAriaLabel={() => `${filter.name} range`}
         sx={{
-          color: '#31AD6E',
           height: '5px',
           width: '80%',
           marginLeft: '10%',
@@ -190,6 +198,24 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
           marginTop: '20%',
           display: 'flex',
           flexDirection: 'column-reverse',
+
+          '& .MuiSlider-rail': {
+            color: 'grey',
+          },
+
+          '& .MuiSlider-track': {
+            color: '#31AD6E',
+          },
+
+          '& .MuiSlider-thumb': {
+            color: 'white',
+            '&:hover, &.Mui-focusVisible': {
+              boxShadow: '0px 0px 0px 8px rgba(49, 173, 110, 0.16)', // Effet d'ombre lors du survol/focus
+            },
+            '&.Mui-active': {
+              boxShadow: '0px 0px 0px 14px rgba(49, 173, 110, 0.16)', // Effet d'ombre lors de l'activation
+            },
+          },
         }}
       />
     )
@@ -223,6 +249,7 @@ export default function Filter({ filter, onFilterChange, selectedValue }) {
     <div className={styles.filter}>
       <div className={styles.filterHeader} onClick={handleOpen}>
         <span className={styles.filterName}>{filterName}</span>
+        <span>Extrems = {extremMin} / {extremMax}</span>
         <div className={styles.iconContainer}>
           {filterLinks[filter.name] && (
             <a

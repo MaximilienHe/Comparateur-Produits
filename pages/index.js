@@ -8,7 +8,7 @@ import Spinner from '../components/Spinner'
 import FilterTag from '../components/FilterTag'
 import NoResult from '../components/NoResult'
 
-export default function Home({ specs, devices, query }) {
+export default function Home({ specs, devices, query, sliderFilterExtremes }) {
   const [filters, setFilters] = useState([])
   const [productList, setProductList] = useState(devices)
   const [loadingDevices, setLoadingDevices] = useState(false)
@@ -184,6 +184,7 @@ export default function Home({ specs, devices, query }) {
                     key={name}
                     filter={{ name, values }}
                     onFilterChange={handleFilterChange}
+                    sliderFilterExtremes={sliderFilterExtremes}
                     selectedValue={determineSelectedValue(
                       values,
                       filtersValues,
@@ -264,7 +265,30 @@ export async function getServerSideProps({ query }) {
   )
   const devices = await devicesRes.json()
 
-  return { props: { specs, devices, query } }
+  const allFiltersRes  = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/filters/specs`, {
+    headers: {
+      'x-api-key': process.env.API_KEY_SECRET,
+    },
+  });
+  const allFilters = await allFiltersRes.json();
+
+  let sliderFilterExtremes = {};
+  const filterNames = [
+    "Prix (en Euros)", "DAS", "Taille Ecran (en pouces)",
+    "Taille Batterie (en mAh)", "Puissance de charge (en W)", "Poids (en g)"
+  ];
+
+  filterNames.forEach(filterName => {
+    const filter = allFilters.find(f => f.name === filterName);
+    if (filter) {
+      const values = filter.values.map(v => parseFloat(v.value));
+      const extremMin = Math.min(...values);
+      const extremMax = Math.max(...values);
+      sliderFilterExtremes[filterName] = { extremMin, extremMax };
+    }
+  });
+
+  return { props: { specs, devices, query, sliderFilterExtremes } }
 }
 
 const fetchDevices = async (filtersValues, newPage) => {
