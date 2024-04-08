@@ -10,6 +10,7 @@ const ProductItem = ({ product }) => {
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/\s+/g, '-')
     .replace(/\+/g, '-plus')
+    .replace(/[()]/g, '')
     .toLowerCase();
 
   // Supposons que le nom de fichier de l'image est le même que celui utilisé par le script de téléchargement
