@@ -37,6 +37,7 @@ async function getFilteredDevices(filters, offset, limit) {
     WHERE 1 = 1
   `
   let ramAndStorageFilters = { RAM: [], Stockage: [] }
+  let conditions = []
 
   for (const filter in filters) {
     let value = filters[filter]
@@ -47,67 +48,34 @@ async function getFilteredDevices(filters, offset, limit) {
         range = true
       } else {
         let valuesArray = value.split(',')
-        // if the filter is "Marque"
         if (filter === 'Marque') {
-          console.log("First brand here");
-          query += ` AND D.brand_name = '${value}'`
-        }
-        else if (filter === 'RAM' || filter === 'Stockage') {
+          conditions.push(`D.brand_name = '${value}'`)
+        } else if (filter === 'RAM' || filter === 'Stockage') {
           ramAndStorageFilters[filter].push(...valuesArray)
         } else {
           valuesArray.forEach((val) => {
-            query += ` AND EXISTS (SELECT 1 FROM specs AS \`S${filter}\` WHERE \`S${filter}\`.device_title = D.title AND \`S${filter}\`.name = '${filter}' AND \`S${filter}\`.value = '${val}')`
+            conditions.push(`EXISTS (SELECT 1 FROM specs AS \`S${filter}\` WHERE \`S${filter}\`.device_title = D.title AND \`S${filter}\`.name = '${filter}' AND \`S${filter}\`.value = '${val}')`)
           })
         }
       }
     }
 
-    switch (filter) {
-      case 'Marque':
-        // Do nothing
-        break
-      // les autres cas restent inchangés
-      case 'DAS':
-      case 'Taille Ecran (en pouces)':
-      case 'Taille Batterie (en mAh)':
-      case 'Poids (en g)':
-      case 'Prix (en Euros)':
-      case 'Puissance de charge (en W)':
-        if (range) {
-          query += ` AND EXISTS (SELECT 1 FROM specs AS \`S${filter}\` WHERE \`S${filter}\`.device_title = D.title AND \`S${filter}\`.name = '${filter}' AND CAST(\`S${filter}\`.value AS DECIMAL(10,2)) BETWEEN '${value[0]}' AND '${value[1]}')`
-        } else {
-          query += ` AND EXISTS (SELECT 1 FROM specs AS \`S${filter}\` WHERE \`S${filter}\`.device_title = D.title AND \`S${filter}\`.name = '${filter}' AND \`S${filter}\`.value = '${value}')`
-        }
-        break
-
-      case '4G':
-      case '5G':
-      case 'Carte SD':
-      case 'Definition Ecran':
-      case 'Matériau Arrière':
-      case 'Puissance de charge (en W)':
-      case 'Rafraichissement Ecran (en Hz)':
-      case 'Ratio Ecran':
-      case 'SoC':
-      case 'Technologie Ecran':
-      case 'Type':
-        query += ` AND EXISTS (SELECT 1 FROM specs AS \`S${filter}\` WHERE \`S${filter}\`.device_title = D.title AND \`S${filter}\`.name = '${filter}' AND \`S${filter}\`.value = '${value}')`
-        break
-      case 'Nombre de capteurs (camera)':
-      case 'Nombre de capteurs (selfie)':
-        query += ` AND EXISTS (SELECT 1 FROM specs AS \`S${filter}\` WHERE \`S${filter}\`.device_title = D.title AND \`S${filter}\`.name = '${value}' AND \`S${filter}\`.value = '${filter}')`
-        break
-      default:
-        break
+    if (range) {
+      conditions.push(`EXISTS (SELECT 1 FROM specs AS \`S${filter}\` WHERE \`S${filter}\`.device_title = D.title AND \`S${filter}\`.name = '${filter}' AND CAST(\`S${filter}\`.value AS DECIMAL(10,2)) BETWEEN '${value[0]}' AND '${value[1]}')`)
     }
   }
 
-  // Now add the RAM and Stockage filters
+  // Add the RAM and Stockage filters
   for (const filter in ramAndStorageFilters) {
     if (ramAndStorageFilters[filter].length > 0) {
       let vals = ramAndStorageFilters[filter].map((v) => `'${v}'`).join(',')
-      query += ` AND EXISTS (SELECT 1 FROM specs AS \`S${filter}\` WHERE \`S${filter}\`.device_title = D.title AND \`S${filter}\`.name = '${filter}' AND \`S${filter}\`.value IN (${vals}))`
+      conditions.push(`EXISTS (SELECT 1 FROM specs AS \`S${filter}\` WHERE \`S${filter}\`.device_title = D.title AND \`S${filter}\`.name = '${filter}' AND \`S${filter}\`.value IN (${vals}))`)
     }
+  }
+
+  // Apply conditions to the query
+  if (conditions.length > 0) {
+    query += ` AND ${conditions.join(' AND ')}`
   }
 
   query += `
@@ -115,7 +83,7 @@ async function getFilteredDevices(filters, offset, limit) {
     LIMIT ${limit} OFFSET ${offset};
   `
 
-  console.log("Query before", query)
+  console.log("Query before execution", query)
   const devices = await db.query(query)
   return devices
 }
